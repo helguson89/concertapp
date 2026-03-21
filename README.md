@@ -31,7 +31,7 @@ Concert tracker for friend groups. Log concerts, plan upcoming shows, chat with 
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/concertapp.git
+git clone https://github.com/helguson89/concertapp.git
 cd concertapp
 ```
 
