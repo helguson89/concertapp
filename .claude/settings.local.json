@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd C:/Users/helge/claude/concert && echo \"\" | npm create vite@latest . -- --template react-ts 2>&1 | head -30)",
+      "Bash(cd C:/Users/helge/claude/concert && npm install 2>&1)",
+      "Bash(cd C:/Users/helge/claude/concert && npm install --legacy-peer-deps 2>&1)",
+      "Bash(cd C:/Users/helge/claude/concert && npx tsc --noEmit 2>&1)",
+      "Bash(cd C:/Users/helge/claude/concert && npx vite build 2>&1)"
+    ]
+  }
+}
