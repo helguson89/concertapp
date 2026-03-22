@@ -24,26 +24,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
       setUser(session?.user ?? null)
-      if (session?.user) fetchDisplayName(session.user.id)
+      if (session?.user) fetchDisplayName(session.user.id, session.user.email)
       setLoading(false)
     })
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
       setUser(session?.user ?? null)
-      if (session?.user) fetchDisplayName(session.user.id)
+      if (session?.user) fetchDisplayName(session.user.id, session.user.email)
     })
 
     return () => subscription.unsubscribe()
   }, [])
 
-  async function fetchDisplayName(userId: string) {
+  async function fetchDisplayName(userId: string, email?: string) {
     const { data } = await supabase
       .from('users')
       .select('display_name')
       .eq('id', userId)
       .single()
-    if (data) setDisplayName(data.display_name)
+    if (data) {
+      setDisplayName(data.display_name)
+    } else if (email) {
+      // Profile missing (e.g. email confirmation interrupted signup) — create it
+      const fallback = email.split('@')[0]
+      await supabase.from('users').upsert({ id: userId, email, display_name: fallback })
+      setDisplayName(fallback)
+    }
   }
 
   async function signIn(email: string, password: string) {
