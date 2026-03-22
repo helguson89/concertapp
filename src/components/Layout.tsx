@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { user, displayName, signOut } = useAuth()
+  const { displayName, signOut } = useAuth()
   const location = useLocation()
 
   const navItems = [
